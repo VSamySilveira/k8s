@@ -26,14 +26,14 @@ spec:
             memory: "200Mi"
         volumeMounts:
         - mountPath: /usr/share/nginx/html
-          name: index-html
+          name: nginx-index
           readOnly: false
           
 
       volumes:
-      - name: index-html
+      - name: nginx-index
         configMap:
-          name: index-html
+          name: nginx-index
           items:
           - key: index.html
             path: index.html
