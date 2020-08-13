@@ -6,13 +6,11 @@ COPY ./gowebsrv /go/src/gowebsrv
 
 WORKDIR /go/src/gowebsrv
 
-RUN go build gowebsrv
-
-ENTRYPOINT ["/usr/local/bin/go", "run", "gowebsrv"]
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gowebsrv .
 
 FROM scratch
 
-COPY --from=builder /go/src/gowebsrv/gowebsrv /bin/
+COPY --from=builder /go/src/gowebsrv/gowebsrv /usr/bin/gowebsrv
 
 EXPOSE 8000
 

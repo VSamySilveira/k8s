@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: websrv-go
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: websrv-go
+  template:
+    metadata:
+      labels:
+        app: websrv-go
+    spec:
+      containers:
+      - name: websrv-go
+        image: samysilveira/gowebsrv
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "200m"
+          limits:
+            cpu: "250m"
+            memory: "200Mi"
