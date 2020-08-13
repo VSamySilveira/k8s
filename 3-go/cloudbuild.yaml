@@ -1,0 +1,21 @@
+steps:
+- id: go_test
+  name: 'gcr.io/cloud-builders/go'
+  env: ['GOPATH=.']
+  args: ['test','gowebsrv']
+
+- id: image_build
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--build-arg'
+  - 'version=1.0.0'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/gowebsrv:latest'
+  - '-t'
+  - 'gcr.io/$PROJECT_ID/gowebsrv:1.0.0'
+  - '.'
+
+images:
+- 'gcr.io/$PROJECT_ID/gowebsrv:latest'
+- 'gcr.io/$PROJECT_ID/gowebsrv:1.0.0'

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: ce-rocks-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ce-rocks-nginx
+  template:
+    metadata:
+      labels:
+        app: ce-rocks-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.17-alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "200m"
+          limits:
+            cpu: "250m"
+            memory: "200Mi"
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: index-html
+          readOnly: false
+          
+
+      volumes:
+      - name: index-html
+        configMap:
+          name: index-html
+          items:
+          - key: index.html
+            path: index.html
